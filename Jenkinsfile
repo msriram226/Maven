@@ -1,28 +1,27 @@
-node('master')
+node('master') 
 {
-    stage('ContinuousDownload') 
+    stage('ContiniousDownload') 
     {
-         git 'https://github.com/selenium-saikrishna/maven.git'
-    }
-    stage('ContinuousBuild') 
-    {
-         sh label: '', script: 'mvn package'
-    }
-    stage('ContinuousDeployment')
-    {
-        sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@172.31.12.49:/var/lib/tomcat8/webapps/testenv.war'
-    }
-    stage('ContinuousTesting')
-    {
-        git 'https://github.com/selenium-saikrishna/FunctionalTesting.git'
-        sh label: '', script: 'java -jar /home/ubuntu/.jenkins/workspace/ScriptedPipeline/testing.jar'
-    }
-     stage('ContinuousDelivery')
-    {
-        input message: 'Waiting for Approval from the DM', submitter: 'Srinivas'
-        sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@172.31.13.206:/var/lib/tomcat8/webapps/prodenv.war'
-    }
-    
-    
+    git credentialsId: 'fc77c491-036d-42e1-af93-55125da35b03', url: 'https://github.com/msriram226/Maven.git'
 }
-
+ stage('ContiniousBuild') 
+    {
+        sh label: '', script: 'mvn package'
+}
+stage('ContiniousDeployment') 
+    {
+   sh label: '', script: '''scp /home/ubuntu/.jenkins/workspace/Development/webapp/target/webapp.war  ubuntu@172.31.15.78:/var/lib/tomcat8/webapps/qaenv.war
+'''
+}
+stage('ContiniousTesting')
+{
+git credentialsId: 'fc77c491-036d-42e1-af93-55125da35b03', url: 'https://github.com/msriram226/TestingNew.git'
+ sh label: '', script: '''echo "Testing Passed" '''
+}
+stage('ContiniousDelivery') 
+    {
+     input message: 'Waiting for Manager Approval', submitter: 'Manager'  
+   sh label: '', script: '''scp /home/ubuntu/.jenkins/workspace/Development/webapp/target/webapp.war  ubuntu@172.31.7.156:/var/lib/tomcat8/webapps/prodenv.war
+'''
+}
+}
