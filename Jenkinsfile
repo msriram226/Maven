@@ -1,3 +1,4 @@
+
 node('master') 
 {
     stage('ContiniousDownload') 
@@ -8,7 +9,7 @@ node('master')
     {
         sh label: '', script: 'mvn package'
 }
-stage('ContiniousDeployment') 
+stage('CoontiniousDeployment') 
     {
    sh label: '', script: '''scp /home/ubuntu/.jenkins/workspace/Development/webapp/target/webapp.war  ubuntu@172.31.15.78:/var/lib/tomcat8/webapps/qaenv.war
 '''
