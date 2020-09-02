@@ -1,7 +1,7 @@
 
 node('master') 
 {
-    stage('ContiniousDownload') 
+    stage('Continious_Download') 
     {
     git credentialsId: 'fc77c491-036d-42e1-af93-55125da35b03', url: 'https://github.com/msriram226/Maven.git'
 }
